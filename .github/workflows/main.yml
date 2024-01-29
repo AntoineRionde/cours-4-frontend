@@ -18,8 +18,13 @@ permissions:
   id-token: write
 
 jobs:
-  hello:
-    name: Echo Hello World
+  test:
+    name: Test Unit
     runs-on: ubuntu-latest
     steps:
-      - run: echo Hello World
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: install dependencies
+        run: npm ci
+      - name: run test
+        run: npm run test
