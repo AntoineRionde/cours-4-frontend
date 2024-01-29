@@ -20,11 +20,21 @@ permissions:
 jobs:
   test:
     name: Test Unit
+    env:
+      -VITE_APP_NAME: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v4
       - name: install dependencies
         run: npm ci
       - name: run test
         run: npm run test
+  build:
+    needs: test
+    env:
+      -VITE_APP_NAME: Prod
+    steps:
+      - run: echo build
