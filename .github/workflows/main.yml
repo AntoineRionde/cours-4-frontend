@@ -21,7 +21,7 @@ jobs:
   test:
     name: Test Unit
     env:
-      -VITE_APP_NAME: Test
+      VITE_APP_NAME: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -36,6 +36,6 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     env:
-      -VITE_APP_NAME: Prod
+      VITE_APP_NAME: Prod
     steps:
       - run: echo build
