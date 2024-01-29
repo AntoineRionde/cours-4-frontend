@@ -18,6 +18,19 @@ permissions:
   id-token: write
 
 jobs:
+  lint:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint and format
+        run: |
+            npm run lint
+            npm run format
+        env:
+          VITE_APP_NAME: App
+      - name: commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+
   test:
     name: Test Unit
     env:
@@ -32,11 +45,8 @@ jobs:
         run: npm ci
       - name: run test
         run: npm run test
-
-      - name: commit automatiquement
-        uses: stefanzweifel/git-auto-commit-action@v5
   build:
-    needs: test
+    needs: [test, lint]
     runs-on: ubuntu-latest
     env:
       VITE_APP_NAME: Prod
