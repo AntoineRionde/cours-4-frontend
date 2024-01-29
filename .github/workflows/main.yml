@@ -48,7 +48,7 @@ jobs:
       - name: install dependencies
         run: npm ci
       - name: Build prod
-        run: npm build
+        run: npm run build
       - name: Creation artefact
         uses: actions/upload-artifact@v4
         with:
@@ -70,7 +70,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-           start: npm preview
+           start: npm run preview
            with_on: http://localhost:4173
            browser: chrome
 
