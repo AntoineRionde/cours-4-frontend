@@ -32,10 +32,49 @@ jobs:
         run: npm ci
       - name: run test
         run: npm run test
+
+      - name: commit automatiquement
+        uses: stefanzweifel/git-auto-commit-action@v5
   build:
     needs: test
     runs-on: ubuntu-latest
     env:
       VITE_APP_NAME: Prod
     steps:
-      - run: echo build
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v4
+      - name: install dependencies
+        run: npm ci
+      - name: Build prod
+        run: npm build
+      - name: Creation artefact
+        uses: actions/upload-artifact@v4
+        with:
+            name: dist
+            path: ./dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      VITE_APP_NAME: Prod
+    steps:
+      - name: Recuperer le dossier dist
+        uses: actions/download-artifact@v4
+        with:
+            name: dist
+
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+           start: npm preview
+           with_on: http://localhost:4173
+           browser: chrome
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./dist
