@@ -15,7 +15,7 @@ Créer un workflow github action qui :
 - Deploie les sources sur Github Page
 
 ## Tips
-
+sds
 - Gerer les permissions de votre workflow dans les paramètres du projet. ✅
 - Activer Github pages dans les paramètres ✅
 - Utilisez `npm ci` pour l'installation des dependances (évite la mise à jour du fichier lock)
