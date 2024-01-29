@@ -77,18 +77,17 @@ jobs:
     env:
       VITE_APP_NAME: Prod
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Recuperer le dossier dist
         uses: actions/download-artifact@v4
         with:
             name: dist
-
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v4
         with:
            start: npm run preview
-           wait-on: 'http://localhost:4173/'
+           wait-on: 'http://localhost:4173'
            browser: chrome
 
       - name: Deploy to GitHub Pages
